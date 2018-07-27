@@ -2,8 +2,8 @@ package sample.reactive.rest.control.service;
 
 import sample.reactive.aop.ExecutionInfo;
 import sample.reactive.rest.control.dto.UserData;
-import sample.reactive.rest.control.model.RegisterApplication;
 import sample.reactive.rest.control.model.User;
+import sample.reactive.rest.control.model.UserRegistration;
 import sample.reactive.rest.exception.DuplicateUsernameException;
 
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 public class RegistrationService {
 
     @Inject
-    private RegisterApplicationService registerApplicationService;
+    private UserRegistrationService userRegistrationService;
     @Inject
     private UserService userService;
     @Inject
@@ -30,25 +30,37 @@ public class RegistrationService {
     public void processUserRegistration(UserData userData, AsyncResponse asyncResponse) {
         CompletableFuture.supplyAsync(() -> {
             try {
-                return registerApplicationService.storeApplication(userData);
+                return userRegistrationService.storeApplication(userData);
             } catch (DuplicateUsernameException e) {
                 e.printStackTrace();
-                asyncResponse.resume(Response.ok("Your registration could not be saved. Reason :\n " + e.getMessage()).build());
+                asyncResponse.resume(Response.ok("Your registration could not be saved. Reason :\n " +
+                        e.getMessage()).build());
 
                 return null;
             }
         }, regExecutors).thenAccept(application -> {
-            if (application != null)
-                asyncResponse.resume(Response.ok("Your registration has been saved and will be further processed!").build());
-                processRegistration(application);
+           try {
+               processRegistration(application);
+               asyncResponse.resume(Response.ok("Your registration request has been saved and will be further" +
+                       " processed!").build());
+            } catch (Exception e) {
+                asyncResponse.resume(Response.ok("Your registration request can't be processed. Reason :\n " +
+                        e.getMessage()).build());
+            }
+
         }).exceptionally(ex -> {
-            asyncResponse.resume(Response.ok("Your registration could not be saved. Reason :\n " + ex.getMessage()).build());
+            asyncResponse.resume(Response.ok("Your registration could not be saved. Reason :\n " +
+                    ex.getMessage()).build());
             return null;
         });
     }
 
-    private void processRegistration(RegisterApplication application) {
-        CompletableFuture.supplyAsync(() -> registerApplicationService.isValid(application), regExecutors)
+    private void processRegistration(UserRegistration application) throws Exception {
+        if (application == null) {
+            throw new Exception("Can not process null application");
+        }
+
+        CompletableFuture.supplyAsync(() -> userRegistrationService.isValid(application), regExecutors)
                 .thenApply(isValid -> {
                     if (!isValid)
                         return null;
@@ -60,17 +72,28 @@ public class RegistrationService {
                         e.printStackTrace();
                         return null;
                     }
-                }).thenAccept(user -> {
-            finishRegistration(user);
+        }).thenApply(user -> {
+            try {
+                finishRegistration(user);
+            } catch (Exception e) {
+                //TODO log
+                e.printStackTrace();
+            }
+            return null;
         });
+
+
     }
 
-    private void finishRegistration(User user) {
-        if (user == null)
-            return;
+    private void finishRegistration(User user) throws Exception {
+        if (user == null) {
+            //TODO throw exception
+            throw new Exception("User is null");
+        }
 
         CompletableFuture.runAsync(() -> notificationService.notifySuccesfullRegistration(user), regExecutors);
-        CompletableFuture.runAsync(() -> registerApplicationService.completeUserRegistration(user.getUsername()), regExecutors);
+        CompletableFuture.runAsync(() -> userRegistrationService.completeUserRegistration(user.getUsername()),
+                regExecutors);
         CompletableFuture.runAsync(() -> userService.initializeUserProfile(user), regExecutors);
     }
 }

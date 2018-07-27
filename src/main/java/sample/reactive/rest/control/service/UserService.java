@@ -2,7 +2,7 @@ package sample.reactive.rest.control.service;
 
 import sample.reactive.aop.ExecutionInfo;
 import sample.reactive.rest.control.dto.UserData;
-import sample.reactive.rest.control.model.RegisterApplication;
+import sample.reactive.rest.control.model.UserRegistration;
 import sample.reactive.rest.control.model.User;
 import sample.reactive.rest.control.persistence.ApplicationStorage;
 import sample.reactive.rest.exception.DuplicateUsernameException;
@@ -20,7 +20,7 @@ public class UserService {
 
     private Random random = new Random();
 
-    public User createUser(RegisterApplication lApplication) throws DuplicateUsernameException {
+    public User createUser(UserRegistration lApplication) throws DuplicateUsernameException {
         UserData uData = lApplication.getUserData();
         User user = new User(uData.getUsername(), uData.getPassword(), uData.getFirstName(), uData.getLastName());
 

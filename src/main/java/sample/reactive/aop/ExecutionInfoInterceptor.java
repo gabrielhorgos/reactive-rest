@@ -14,13 +14,13 @@ public class ExecutionInfoInterceptor {
     public Object printExecutionInfo(InvocationContext invocationContext) throws Exception {
         String threadName = Thread.currentThread().getName();
 
-        String method = invocationContext.getMethod().getName();
+        String method = invocationContext.getMethod().toString();
 
         System.out.println("Thread: " + threadName + " executing " + method);
         //execute intercepted method
         Object returnedVal = invocationContext.proceed();
 
-        System.out.println(method + " execution finished, release " + threadName);
+        System.out.println( "RELEASE : " + threadName + ", execution finished : " + method);
 
         return returnedVal;
     }

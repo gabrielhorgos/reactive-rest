@@ -2,7 +2,7 @@ package sample.reactive.rest.control.service;
 
 import sample.reactive.aop.ExecutionInfo;
 import sample.reactive.rest.control.dto.UserData;
-import sample.reactive.rest.control.model.RegisterApplication;
+import sample.reactive.rest.control.model.UserRegistration;
 import sample.reactive.rest.control.persistence.ApplicationStorage;
 import sample.reactive.rest.exception.DuplicateUsernameException;
 
@@ -11,16 +11,16 @@ import javax.inject.Singleton;
 
 @ExecutionInfo
 @Singleton
-public class RegisterApplicationService {
+public class UserRegistrationService {
 
     @Inject
     private ApplicationStorage storage;
 
-    public RegisterApplication storeApplication(UserData user) throws DuplicateUsernameException {
-        return storage.saveApplication(new RegisterApplication(user));
+    public UserRegistration storeApplication(UserData user) throws DuplicateUsernameException {
+        return storage.saveApplication(new UserRegistration(user));
     }
 
-    public boolean isValid(RegisterApplication lApplication) {
+    public boolean isValid(UserRegistration lApplication) {
         String username = lApplication.getUserData().getUsername();
         String password = lApplication.getUserData().getPassword();
 

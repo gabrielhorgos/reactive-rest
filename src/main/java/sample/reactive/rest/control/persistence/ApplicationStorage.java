@@ -1,7 +1,7 @@
 package sample.reactive.rest.control.persistence;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.control.model.RegisterApplication;
+import sample.reactive.rest.control.model.UserRegistration;
 import sample.reactive.rest.control.model.User;
 import sample.reactive.rest.exception.DuplicateUsernameException;
 
@@ -41,9 +41,9 @@ public class ApplicationStorage {
         return users;
     }
 
-    private List<RegisterApplication> getApplications() {
+    private List<UserRegistration> getApplications() {
 
-        List<RegisterApplication> applications = (List<RegisterApplication>) storage.get(APPLICATIONS_KEY);
+        List<UserRegistration> applications = (List<UserRegistration>) storage.get(APPLICATIONS_KEY);
 
         if (applications == null) {
             applications = Collections.synchronizedList(new ArrayList<>());
@@ -53,11 +53,11 @@ public class ApplicationStorage {
         return applications;
     }
 
-    public RegisterApplication saveApplication(RegisterApplication registerApplication) throws DuplicateUsernameException {
+    public UserRegistration saveApplication(UserRegistration userRegistration) throws DuplicateUsernameException {
         regApplicationLock.lock();
 
         try {
-            String username = registerApplication.getUserData().getUsername();
+            String username = userRegistration.getUserData().getUsername();
             boolean alreadyExists = getApplications()
                     .stream()
                     .anyMatch(a -> a.getUserData().getUsername().equals(username));
@@ -67,13 +67,13 @@ public class ApplicationStorage {
                         username);
             }
 
-            registerApplication.setId(applicationPrimaryKey.getAndIncrement());
-            getApplications().add(registerApplication);
+            userRegistration.setId(applicationPrimaryKey.getAndIncrement());
+            getApplications().add(userRegistration);
         } finally {
             regApplicationLock.unlock();
         }
 
-        return registerApplication;
+        return userRegistration;
     }
 
     public User storeUser(User user) throws DuplicateUsernameException {

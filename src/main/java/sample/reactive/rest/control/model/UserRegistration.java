@@ -4,13 +4,13 @@ import sample.reactive.rest.control.dto.UserData;
 
 import java.time.Instant;
 
-public class RegisterApplication {
+public class UserRegistration {
 
     private long id;
     private UserData userData;
     private Instant timestamp = Instant.now();
 
-    public RegisterApplication(UserData user) {
+    public UserRegistration(UserData user) {
         this.userData = user;
     }
 
