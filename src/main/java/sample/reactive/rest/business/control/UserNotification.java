@@ -1,14 +1,14 @@
-package sample.reactive.rest.service;
+package sample.reactive.rest.business.control;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.model.User;
+import sample.reactive.rest.business.entity.User;
 
 import javax.inject.Singleton;
 import java.util.Random;
 
 @ExecutionInfo
 @Singleton
-public class NotificationService {
+public class UserNotification {
 
     private Random random = new Random();
 

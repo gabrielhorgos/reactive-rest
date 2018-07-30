@@ -1,7 +1,7 @@
 package sample.reactive.application;
 
 
-import sample.reactive.rest.control.AsyncApiResource;
+import sample.reactive.rest.business.boundary.AsyncApiResource;
 
 import javax.ws.rs.core.Application;
 import java.util.Set;

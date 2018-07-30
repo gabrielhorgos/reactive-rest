@@ -1,4 +1,4 @@
-package sample.reactive.rest.exception;
+package sample.reactive.rest.business.boundary.exception;
 
 public class DuplicateUsernameException extends Exception {
 

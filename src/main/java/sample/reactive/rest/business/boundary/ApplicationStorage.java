@@ -1,9 +1,9 @@
-package sample.reactive.rest.persistence;
+package sample.reactive.rest.business.boundary;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.model.UserRegistration;
-import sample.reactive.rest.model.User;
-import sample.reactive.rest.exception.DuplicateUsernameException;
+import sample.reactive.rest.business.entity.UserRegistration;
+import sample.reactive.rest.business.entity.User;
+import sample.reactive.rest.business.boundary.exception.DuplicateUsernameException;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;
@@ -57,10 +57,10 @@ public class ApplicationStorage {
         regApplicationLock.lock();
 
         try {
-            String username = userRegistration.getUserData().getUsername();
+            String username = userRegistration.getRegistrationForm().getUsername();
             boolean alreadyExists = getApplications()
                     .stream()
-                    .anyMatch(a -> a.getUserData().getUsername().equals(username));
+                    .anyMatch(a -> a.getRegistrationForm().getUsername().equals(username));
 
             if (alreadyExists) {
                 throw new DuplicateUsernameException("There already exists a registration application for username : " +
@@ -98,6 +98,6 @@ public class ApplicationStorage {
     }
 
     public void removeApplicationsForUsername(String username) {
-        getApplications().removeIf(aplication -> aplication.getUserData().getUsername().equals(username));
+        getApplications().removeIf(aplication -> aplication.getRegistrationForm().getUsername().equals(username));
     }
 }
