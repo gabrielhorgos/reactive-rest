@@ -1,34 +1,26 @@
-package sample.reactive.rest.control.model;
+package sample.reactive.rest.dto;
 
-public class User {
+import java.io.Serializable;
 
-    private long id;
+public class UserData implements Serializable {
+
     private String username;
     private String password;
     private String firstName;
     private String lastName;
 
-    public User(String username, String password, String firstName, String lastName) {
+    public UserData() {
+
+    }
+
+    public UserData(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public User() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getUsername() {
-
         return username;
     }
 
@@ -58,15 +50,5 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
     }
 }

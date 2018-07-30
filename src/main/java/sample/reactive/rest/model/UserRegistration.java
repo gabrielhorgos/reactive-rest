@@ -1,6 +1,6 @@
-package sample.reactive.rest.control.model;
+package sample.reactive.rest.model;
 
-import sample.reactive.rest.control.dto.UserData;
+import sample.reactive.rest.dto.UserData;
 
 import java.time.Instant;
 

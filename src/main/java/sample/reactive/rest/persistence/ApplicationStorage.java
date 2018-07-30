@@ -1,8 +1,8 @@
-package sample.reactive.rest.control.persistence;
+package sample.reactive.rest.persistence;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.control.model.UserRegistration;
-import sample.reactive.rest.control.model.User;
+import sample.reactive.rest.model.UserRegistration;
+import sample.reactive.rest.model.User;
 import sample.reactive.rest.exception.DuplicateUsernameException;
 
 import javax.inject.Singleton;

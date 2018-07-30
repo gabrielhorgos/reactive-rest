@@ -1,9 +1,9 @@
-package sample.reactive.rest.control.service;
+package sample.reactive.rest.service;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.control.dto.UserData;
-import sample.reactive.rest.control.model.UserRegistration;
-import sample.reactive.rest.control.persistence.ApplicationStorage;
+import sample.reactive.rest.dto.UserData;
+import sample.reactive.rest.model.UserRegistration;
+import sample.reactive.rest.persistence.ApplicationStorage;
 import sample.reactive.rest.exception.DuplicateUsernameException;
 
 import javax.inject.Inject;

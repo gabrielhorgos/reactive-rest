@@ -1,8 +1,8 @@
 package sample.reactive.rest.control;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.control.dto.UserData;
-import sample.reactive.rest.control.service.RegistrationService;
+import sample.reactive.rest.dto.UserData;
+import sample.reactive.rest.service.RegistrationService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

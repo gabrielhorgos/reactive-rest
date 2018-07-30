@@ -1,7 +1,7 @@
-package sample.reactive.rest.control.service;
+package sample.reactive.rest.service;
 
 import sample.reactive.aop.ExecutionInfo;
-import sample.reactive.rest.control.model.User;
+import sample.reactive.rest.model.User;
 
 import javax.inject.Singleton;
 import java.util.Random;
