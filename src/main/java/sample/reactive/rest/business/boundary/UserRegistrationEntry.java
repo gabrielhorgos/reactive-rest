@@ -1,6 +1,6 @@
 package sample.reactive.rest.business.boundary;
 
-import sample.reactive.aop.ExecutionInfo;
+import sample.reactive.rest.business.control.ExecutionInfo;
 import sample.reactive.rest.business.boundary.exception.DuplicateUsernameException;
 import sample.reactive.rest.business.entity.UserRegistration;
 
@@ -15,7 +15,7 @@ public class UserRegistrationEntry {
     private ApplicationStorage applicationStorage;
 
     public UserRegistration save(RegistrationForm user) throws DuplicateUsernameException {
-        return applicationStorage.saveApplication(new UserRegistration(user));
+        return applicationStorage.saveUserRegistration(new UserRegistration(user));
     }
 
 

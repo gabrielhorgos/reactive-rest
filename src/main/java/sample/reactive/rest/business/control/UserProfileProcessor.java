@@ -1,6 +1,5 @@
 package sample.reactive.rest.business.control;
 
-import sample.reactive.aop.ExecutionInfo;
 import sample.reactive.rest.business.entity.User;
 
 import javax.inject.Singleton;
@@ -13,6 +12,7 @@ public class UserProfileProcessor {
     private Random random = new Random();
 
     public void initializeUserProfile(User user) {
+        //TODO call REST endpoint to do stuff (BCI - component interface)
         System.out.println("Starting to build profile for user : " + user.toString());
         try {
             Thread.sleep(random.nextInt(2000));

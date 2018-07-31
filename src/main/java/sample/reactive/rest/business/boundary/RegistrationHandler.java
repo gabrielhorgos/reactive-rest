@@ -1,6 +1,6 @@
 package sample.reactive.rest.business.boundary;
 
-import sample.reactive.aop.ExecutionInfo;
+import sample.reactive.rest.business.control.ExecutionInfo;
 import sample.reactive.rest.business.boundary.exception.DuplicateUsernameException;
 import sample.reactive.rest.business.control.RegistrationValidation;
 import sample.reactive.rest.business.control.UserNotification;
@@ -18,18 +18,18 @@ import java.util.concurrent.Executors;
 
 @Singleton
 @ExecutionInfo
-public class RegistrationEntry {
+public class RegistrationHandler {
 
     @Inject
     private UserEntry userEntry;
+    @Inject
+    private UserRegistrationEntry userRegistrationEntry;
     @Inject
     private UserNotification userNotification;
     @Inject
     private RegistrationValidation registrationValidation;
     @Inject
     private UserProfileProcessor userProfileProcessor;
-    @Inject
-    private UserRegistrationEntry userRegistrationEntry;
 
     private final ExecutorService regExecutors = Executors.newFixedThreadPool(5);
 

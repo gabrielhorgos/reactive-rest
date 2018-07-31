@@ -1,4 +1,4 @@
-package sample.reactive.aop;
+package sample.reactive.rest.business.control;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.Retention;

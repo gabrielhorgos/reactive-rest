@@ -1,6 +1,5 @@
 package sample.reactive.rest.business.control;
 
-import sample.reactive.aop.ExecutionInfo;
 import sample.reactive.rest.business.entity.UserRegistration;
 
 @ExecutionInfo

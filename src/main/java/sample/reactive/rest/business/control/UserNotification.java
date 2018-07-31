@@ -1,6 +1,5 @@
 package sample.reactive.rest.business.control;
 
-import sample.reactive.aop.ExecutionInfo;
 import sample.reactive.rest.business.entity.User;
 
 import javax.inject.Singleton;
@@ -13,6 +12,7 @@ public class UserNotification {
     private Random random = new Random();
 
     public User notifySuccesfullRegistration(User user) {
+        //TODO external call tu notifying service
         System.out.println("Sending email notification to user " + user.toString());
 
 

@@ -1,6 +1,6 @@
 package sample.reactive.rest.business.boundary;
 
-import sample.reactive.aop.ExecutionInfo;
+import sample.reactive.rest.business.control.ExecutionInfo;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -16,14 +16,14 @@ import javax.ws.rs.core.MediaType;
 public class AsyncApiResource {
 
     @Inject
-    private RegistrationEntry registrationEntry;
+    private RegistrationHandler registrationHandler;
 
     @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void registerUser(RegistrationForm registrationForm, @Suspended AsyncResponse asyncResponse) {
-        registrationEntry.handleRegistration(registrationForm, asyncResponse);
+        registrationHandler.handleRegistration(registrationForm, asyncResponse);
     }
 
 }

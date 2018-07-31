@@ -4,7 +4,7 @@
        bean-discovery-mode="all">
 
     <interceptors>
-        <class>sample.reactive.aop.ExecutionInfoInterceptor</class>
+        <class>sample.reactive.rest.business.control.ExecutionInfoInterceptor</class>
     </interceptors>
 
 </beans>
