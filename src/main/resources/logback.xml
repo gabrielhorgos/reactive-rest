@@ -1,0 +1,62 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- set immediateFlush to false for much higher logging throughput -->
+        <immediateFlush>false</immediateFlush>
+        <file>C:/log/registration.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>registration.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNCFILE" class="ch.qos.logback.core.FileAppender">
+        <!-- set immediateFlush to false for much higher logging throughput -->
+        <immediateFlush>false</immediateFlush>
+        <file>C:/log/registration-async.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>registration.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="ASYNCFILE"/>
+    </appender>
+
+    <logger name="sample" level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <logger name="sample.reactive.rest.business.control.ExecutionInfoInterceptor" level="debug">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNC"/>
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNC"/>
+    </root>
+
+</configuration>
