@@ -53,7 +53,7 @@ public class ApplicationStorage {
         return applications;
     }
 
-    public UserRegistration saveUserRegistration(UserRegistration userRegistration) throws DuplicateUsernameException {
+    public UserRegistration saveUserRegistration(UserRegistration userRegistration) {
         regApplicationLock.lock();
 
         try {
@@ -63,7 +63,7 @@ public class ApplicationStorage {
                     .anyMatch(a -> a.getRegistrationForm().getUsername().equals(username));
 
             if (alreadyExists) {
-                throw new DuplicateUsernameException("There already exists a registration application for username : " +
+                throw new RuntimeException("There already exists a registration application for username : " +
                         username);
             }
 
@@ -76,7 +76,7 @@ public class ApplicationStorage {
         return userRegistration;
     }
 
-    public User storeUser(User user) throws DuplicateUsernameException {
+    public User storeUser(User user) {
         userLock.lock();
         try {
             boolean alreadyExists = getUsers().entrySet()
@@ -84,7 +84,7 @@ public class ApplicationStorage {
                     .anyMatch(entry -> entry.getValue().getUsername().equals(user.getUsername()));
 
             if (alreadyExists) {
-                throw new DuplicateUsernameException("There already exists an user with username : " + user.getUsername());
+                throw new RuntimeException("There already exists an user with username : " + user.getUsername());
             }
 
             user.setId(userPrimaryKey.getAndIncrement());

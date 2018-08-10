@@ -15,7 +15,7 @@ public class UserEntry {
     @Inject
     private ApplicationStorage applicationStorage;
 
-    public User createUser(UserRegistration lApplication) throws DuplicateUsernameException {
+    public User createUser(UserRegistration lApplication) {
         RegistrationForm uData = lApplication.getRegistrationForm();
         User user = new User(uData.getUsername(), uData.getPassword(), uData.getFirstName(), uData.getLastName());
 
