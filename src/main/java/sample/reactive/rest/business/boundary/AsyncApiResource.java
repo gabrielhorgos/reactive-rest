@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @ExecutionInfo
 @Path("/")
@@ -23,7 +24,8 @@ public class AsyncApiResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void registerUser(RegistrationForm registrationForm, @Suspended AsyncResponse asyncResponse) {
-        registrationHandler.handleRegistration(registrationForm, asyncResponse);
-    }
+        registrationHandler
+                .handleRegistration(registrationForm)
+                .thenAccept(r ->  asyncResponse.resume(Response.ok(r).build()));    }
 
 }

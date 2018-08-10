@@ -8,15 +8,17 @@ public class RegistrationForm implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
+    private String email;
 
     public RegistrationForm() {
     }
 
-    public RegistrationForm(String username, String password, String firstName, String lastName) {
+    public RegistrationForm(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -49,5 +51,13 @@ public class RegistrationForm implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
