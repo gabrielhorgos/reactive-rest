@@ -19,11 +19,11 @@ public class ExecutionInfoInterceptor {
 
         String method = invocationContext.getMethod().toString();
 
-        logger.debug("Thread: " + threadName + " executing " + method);
+        logger.debug("AQUIRE  T : " + threadName + " executing " + method);
         //execute intercepted method
         Object returnedVal = invocationContext.proceed();
 
-        logger.debug("RELEASE : " + threadName + ", execution finished : " + method);
+        logger.debug("RELEASE T : " + threadName + ", execution finished : " + method);
 
         return returnedVal;
     }
