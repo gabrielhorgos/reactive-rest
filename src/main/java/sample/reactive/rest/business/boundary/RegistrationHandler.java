@@ -12,8 +12,6 @@ import sample.reactive.rest.business.entity.UserRegistration;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Singleton
 @ExecutionInfo
@@ -31,18 +29,19 @@ public class RegistrationHandler {
     private RegistrationValidation registrationValidation;
     @Inject
     private UserProfileProcessor userProfileProcessor;
-
-    private final ExecutorService regExecutors = Executors.newFixedThreadPool(5);
+    @Inject
+    private CommonExecService commonExecService;
 
     public CompletableFuture<String> handleRegistration(RegistrationForm registrationForm) {
-        return CompletableFuture.supplyAsync(() -> registrationValidation.validate(registrationForm), regExecutors)
+        return CompletableFuture.supplyAsync(() -> registrationValidation.validate(registrationForm),
+                commonExecService.getExecService())
                 .thenApply(r -> userRegistrationEntry.save(r))
                 .thenApply(r -> processUserRegistration(r))
                 .handle(this::handleRegistrationFailure);
     }
 
     private String processUserRegistration(UserRegistration userRegistration) {
-        CompletableFuture.supplyAsync(() -> userEntry.createUser(userRegistration), regExecutors)
+        CompletableFuture.supplyAsync(() -> userEntry.createUser(userRegistration), commonExecService.getExecService())
                 .thenAccept(this::completeRegistration)
                 .exceptionally(t -> {
                     userNotification.notifyUnSuccesfullRegistration(userRegistration.getRegistrationForm().getEmail());
@@ -58,9 +57,12 @@ public class RegistrationHandler {
     }
 
     private void completeRegistration(User user) {
-        CompletableFuture.runAsync(() -> userNotification.notifySuccesfullRegistration(user), regExecutors);
-        CompletableFuture.runAsync(() -> userRegistrationEntry.removeUserRegistration(user), regExecutors);
-        CompletableFuture.runAsync(() -> userProfileProcessor.initializeUserProfile(user), regExecutors);
+        CompletableFuture.runAsync(() -> userNotification.notifySuccesfullRegistration(user),
+                commonExecService.getExecService());
+        CompletableFuture.runAsync(() -> userRegistrationEntry.removeUserRegistration(user),
+                commonExecService.getExecService());
+        CompletableFuture.runAsync(() -> userProfileProcessor.initializeUserProfile(user),
+                commonExecService.getExecService());
     }
 
 

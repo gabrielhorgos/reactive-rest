@@ -11,6 +11,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.concurrent.CompletableFuture;
 
 @ExecutionInfo
 @Path("/")
@@ -18,14 +19,17 @@ public class AsyncApiResource {
 
     @Inject
     private RegistrationHandler registrationHandler;
+    @Inject
+    private CommonExecService commonExecService;
 
     @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void registerUser(RegistrationForm registrationForm, @Suspended AsyncResponse asyncResponse) {
-        registrationHandler
-                .handleRegistration(registrationForm)
-                .thenAccept(r ->  asyncResponse.resume(Response.ok(r).build()));    }
+        CompletableFuture.supplyAsync(() -> registrationHandler.handleRegistration(registrationForm),
+                commonExecService.getExecService())
+                .thenCompose(cf -> cf.thenAccept(r -> asyncResponse.resume(Response.ok(r).build())));
+    }
 
 }

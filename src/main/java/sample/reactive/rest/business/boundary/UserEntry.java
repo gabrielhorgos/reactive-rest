@@ -1,7 +1,6 @@
 package sample.reactive.rest.business.boundary;
 
 import sample.reactive.rest.business.control.ExecutionInfo;
-import sample.reactive.rest.business.boundary.exception.DuplicateUsernameException;
 import sample.reactive.rest.business.entity.User;
 import sample.reactive.rest.business.entity.UserRegistration;
 
@@ -17,7 +16,8 @@ public class UserEntry {
 
     public User createUser(UserRegistration lApplication) {
         RegistrationForm uData = lApplication.getRegistrationForm();
-        User user = new User(uData.getUsername(), uData.getPassword(), uData.getFirstName(), uData.getLastName());
+        User user = new User(uData.getUsername(), uData.getPassword(), uData.getFirstName(), uData.getLastName(),
+                uData.getEmail());
 
         return applicationStorage.storeUser(user);
     }
