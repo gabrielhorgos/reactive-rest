@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<glassfish-web-app error-url="">
+
+    <!-- Add this to force server to load libraries first from app then from server modules-->
+    <class-loader delegate="false"/>
+
+    <!-- Extreme classloading isolation. Only packages listed here will be loaded, besides the required ones
+    See https://docs.payara.fish/documentation/payara-server/classloading.html -->
+    <!--<whitelist-package>fish.payara</whitelist-package>-->
+
+    <context-root>/</context-root>
+</glassfish-web-app>
