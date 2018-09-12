@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import sample.reactive.rest.business.boundary.AsyncApiResource;
+import sample.reactive.rest.business.boundary.AsyncApiResource2;
 
 import javax.ws.rs.core.Application;
 import java.util.Set;
@@ -37,6 +38,7 @@ public class ApplicationConfig extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(AsyncApiResource.class);
+        resources.add(AsyncApiResource2.class);
 
         //register JAX-RS openapi resources
         resources.add(OpenApiResource.class);
